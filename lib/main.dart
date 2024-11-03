@@ -22,25 +22,25 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Calculator extends StatefulWidget {
+class Calculator extends StatefulWidget { // Class Calculator adalah widget stateful karena memiliki nilai yang selalu berubah ketika tombolnya ditekan
   @override
   _CalculatorState createState() => _CalculatorState();
 }
 
 class _CalculatorState extends State<Calculator> {
-  String output = "0";
+  String output = "0"; // output merupakan variabel yang menampung nilai yang akan ditampilkan di kalkulator
 
-  void buttonPressed(String buttonText) {
+  void buttonPressed(String buttonText) { // fungsi buttonpressed yang akan dipanggil ketika tombol ditekan
     setState(() {
-      if (buttonText == "C") {
+      if (buttonText == "C") { // jika tombol c ditekan, output diubah menjadi 0
         output = "0";
-      } else if (buttonText == "=") {
+      } else if (buttonText == "=") { // jika tombol = ditekan, output diubah menjadi hasil dari expression
         try {
-          output = evaluateExpression(output);
-        } catch (e) {
-          output = "Error";
+          output = evaluateExpression(output); // evaluateExpression adalah fungsi yang digunakan untuk menghitung hasil dari expression
+        } catch (e) { // catch digunakan untuk menangani kesalahan yang terjadi ketika menghitung expression (contohnya jika user memasukkan fungsi yang tidak valid seperti 1++2 atau hanya +)
+          output = "Error"; // jika terjadi kesalahan, output yang muncul di kalkulator diubah menjadi Error
         }
-      } else {
+      } else { 
         if (output == "0") {
           output = buttonText;
         } else {
@@ -50,28 +50,28 @@ class _CalculatorState extends State<Calculator> {
     });
   }
 
-  String evaluateExpression(String expression) {
-    final parsedExpression = Expression.parse(expression);
-    final evaluator = const ExpressionEvaluator();
-    final result = evaluator.eval(parsedExpression, {});
-    return result.toString();
+  String evaluateExpression(String expression) { // fungsi ini digunakan untuk mengonversi expression menjadi hasil perhitungan. fungsi ini diambil dari expression.dart
+    final parsedExpression = Expression.parse(expression); // digunakan untuk mengonversi string menjadi expression yang dapat dipahami oleh komputer
+    final evaluator = const ExpressionEvaluator(); 
+    final result = evaluator.eval(parsedExpression, {}); // digunakan untuk mengevaluasi expression dan mengembalikan nilai sebagai string
+    return result.toString(); // pengembalian nilai kepada string
   }
 
-  Widget buildButton(String buttonText, Color color, {double widthFactor = 1.0}) {
-    return Expanded(
-      flex: widthFactor.toInt(),
+  Widget buildButton(String buttonText, Color color, {double widthFactor = 1.0}) { // fungsi ini digunakan untuk membuat widget tombol dengan teks, warna, dan ukuran yang sudah ditentukan
+    return Expanded( // membuat tombol dapat mengisi ruang horizontal yang tersedia dalam 1 baris atau 1 row
+      flex: widthFactor.toInt(), // widthfactor digunakan untuk menentukan lebar tombol menjadi 1. flex digunakan untuk menentukan proporsi lebar tombol dalam baris
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
+        child: ElevatedButton( // digunakan untuk membuat tombol dengar gaya tertentu
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 22),
+            padding: EdgeInsets.symmetric(vertical: 22), // digunakan untuk mengatur jarak dalam tombol secara vertical menjadi 22 sehingga tombol terlihat tinggi
             backgroundColor: color,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40.0),
+              borderRadius: BorderRadius.circular(40.0), // digunakan untuk membuat sudut tombol melengkung dengan radius 40
             ),
-            elevation: 0,
+            elevation: 0, // mengatur bayangan tombol menjadi 0 dan tampak datar
           ),
-          onPressed: () => buttonPressed(buttonText),
+          onPressed: () => buttonPressed(buttonText), // ketika ditekan, fungsi buttonPressed dipanggil dengan parameter buttonText
           child: Text(
             buttonText,
             style: TextStyle(
@@ -86,10 +86,10 @@ class _CalculatorState extends State<Calculator> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) { // fungsi build digunakan untuk membuat tampilan utama
+    return Scaffold( // digunakan untuk membuat struktur dasar untuk halaman
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.stretch, // Tanpa CrossAxisAlignment.stretch, tombol-tombol tersebut akan memiliki lebar sesuai dengan ukuran teksnya masing-masing atau pengaturan default widget tombol
         children: <Widget>[
           Expanded(
             child: Container(
@@ -116,7 +116,7 @@ class _CalculatorState extends State<Calculator> {
                   buildButton("7", Colors.grey.shade800),
                   buildButton("8", Colors.grey.shade800),
                   buildButton("9", Colors.grey.shade800),
-                  buildButton("*", Colors.orange), // Perbaiki simbol perkalian
+                  buildButton("*", Colors.orange),
                 ],
               ),
               Row(
@@ -137,7 +137,7 @@ class _CalculatorState extends State<Calculator> {
               ),
               Row(
                 children: <Widget>[
-                  buildButton("0", Colors.grey.shade800, widthFactor: 2),
+                  buildButton("0", Colors.grey.shade800, widthFactor: 2), // widthFactor digunakan untuk mengatur lebar tombol menjadi 2
                   buildButton(".", Colors.grey.shade800),
                   buildButton("=", Colors.orange),
                 ],
