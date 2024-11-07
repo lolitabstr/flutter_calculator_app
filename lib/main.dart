@@ -40,19 +40,19 @@ class _CalculatorState extends State<Calculator> {
         } catch (e) { // catch digunakan untuk menangani kesalahan yang terjadi ketika menghitung expression (contohnya jika user memasukkan fungsi yang tidak valid seperti 1++2 atau hanya +)
           output = "Error"; // jika terjadi kesalahan, output yang muncul di kalkulator diubah menjadi Error
         }
-      } else { 
-        if (output == "0") {
-          output = buttonText;
-        } else {
-          output += buttonText;
-        }
-      }
+      } // else { 
+        //if (output == "0") {
+          //output = buttonText;
+        //} else {
+          //output += buttonText;
+        //}
+      //}
     });
   }
 
   String evaluateExpression(String expression) { // fungsi ini digunakan untuk mengonversi expression menjadi hasil perhitungan. fungsi ini diambil dari expression.dart
     final parsedExpression = Expression.parse(expression); // digunakan untuk mengonversi string menjadi expression yang dapat dipahami oleh komputer
-    final evaluator = const ExpressionEvaluator(); 
+    final evaluator = ExpressionEvaluator(); 
     final result = evaluator.eval(parsedExpression, {}); // digunakan untuk mengevaluasi expression dan mengembalikan nilai sebagai string
     return result.toString(); // pengembalian nilai kepada string
   }
