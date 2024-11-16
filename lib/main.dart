@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: Calculator(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -40,13 +41,13 @@ class _CalculatorState extends State<Calculator> {
         } catch (e) { // catch digunakan untuk menangani kesalahan yang terjadi ketika menghitung expression (contohnya jika user memasukkan fungsi yang tidak valid seperti 1++2 atau hanya +)
           output = "Error"; // jika terjadi kesalahan, output yang muncul di kalkulator diubah menjadi Error
         }
-      } // else { 
-        //if (output == "0") {
-          //output = buttonText;
-        //} else {
-          //output += buttonText;
-        //}
-      //}
+      } else { 
+        if (output == "0") {
+          output = buttonText;
+        } else {
+          output += buttonText;
+        }
+      }
     });
   }
 
